@@ -9,7 +9,7 @@ export default function MentorsSection() {
     return (
         <section id="mentors" className="py-16 px-4 md:px-8 bg-white">
             <div className="max-w-7xl mx-auto">
-                {/* Header - Left aligned with View All link */}
+                {/* Judul & Link */}
                 <div className="flex items-center justify-between mb-8">
                     <div>
                         <h2 className="font-heading text-2xl md:text-3xl font-bold text-gray-900">
@@ -28,14 +28,14 @@ export default function MentorsSection() {
                     </Link>
                 </div>
 
-                {/* Instructor Cards */}
+                {/* Daftar Mentor */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                     {mentorsTampil.map((mentor) => (
                         <div
                             key={mentor.id}
                             className="bg-white rounded-2xl p-6 text-center group border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all"
                         >
-                            {/* Foto Mentor - Larger */}
+                            {/* Foto Mentor */}
                             <div className="relative w-24 h-24 md:w-32 md:h-32 mx-auto mb-4 rounded-full overflow-hidden">
                                 <Image
                                     src={mentor.foto}
@@ -56,7 +56,7 @@ export default function MentorsSection() {
                     ))}
                 </div>
 
-                {/* Mobile View All */}
+                {/* Tombol Lihat Semua (Mobile) */}
                 <div className="mt-8 text-center md:hidden">
                     <Link
                         href="/instructors"

@@ -1,8 +1,13 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { daftarStudio, formatRupiah } from "@/data";
 import { daftarCourt } from "@/data";
 import { ArrowRight } from "lucide-react";
+import ScrollAnimate from "./ScrollAnimate";
+import { StudioCardSkeleton } from "./skeletons";
 
 function StarRating({ rating }: { rating: number }) {
     return (
@@ -22,9 +27,17 @@ function getHargaMulai(studioId: string): number {
 }
 
 export default function StudiosSection() {
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 1000);
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <section id="studios" className="py-10 md:py-16 px-4 md:px-8 bg-white">
             <div className="max-w-7xl mx-auto">
+                {/* Judul & Link */}
                 <div className="flex items-center justify-between mb-8">
                     <div>
                         <h2 className="text-3xl font-bold text-gray-900">Popular Studios</h2>
@@ -39,64 +52,78 @@ export default function StudiosSection() {
                     </Link>
                 </div>
 
+                {/* Daftar Studio */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {daftarStudio.map((studio) => (
-                        <Link
-                            key={studio.id}
-                            href={`/studio/${studio.id}`}
-                            className="bg-white rounded-2xl overflow-hidden group border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all"
-                        >
-                            {/* Gambar Studio */}
-                            <div className="relative h-48 overflow-hidden">
-                                <Image
-                                    src={studio.gambar}
-                                    alt={studio.nama}
-                                    fill
-                                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                                />
-                            </div>
+                    {isLoading ? (
+                        <>
+                            {[...Array(4)].map((_, i) => (
+                                <StudioCardSkeleton key={i} />
+                            ))}
+                        </>
+                    ) : (
+                        daftarStudio.map((studio, index) => (
+                            <ScrollAnimate 
+                                key={studio.id} 
+                                animation="fade-up" 
+                                delay={((index % 4) + 1) * 100 as 100 | 200 | 300 | 400}
+                            >
+                                <Link
+                                    href={`/studio/${studio.id}`}
+                                    className="block bg-white rounded-2xl overflow-hidden group border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all"
+                                >
+                                    {/* Gambar Studio */}
+                                    <div className="relative h-48 overflow-hidden">
+                                        <Image
+                                            src={studio.gambar}
+                                            alt={studio.nama}
+                                            fill
+                                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                        />
+                                    </div>
 
-                            {/* Info Studio */}
-                            <div className="p-4">
-                                <div className="flex items-center justify-between mb-2">
-                                    <h3 className="font-heading font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
-                                        {studio.nama}
-                                    </h3>
-                                    <StarRating rating={studio.rating} />
-                                </div>
+                                    {/* Info Studio */}
+                                    <div className="p-4">
+                                        <div className="flex items-center justify-between mb-2">
+                                            <h3 className="font-heading font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
+                                                {studio.nama}
+                                            </h3>
+                                            <StarRating rating={studio.rating} />
+                                        </div>
 
-                                <p className="text-gray-500 text-sm mb-3 flex items-center gap-1">
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                    {studio.lokasi}
-                                </p>
+                                        <p className="text-gray-500 text-sm mb-3 flex items-center gap-1">
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                            {studio.lokasi}
+                                        </p>
 
-                                {/* Fasilitas/Tags */}
-                                <div className="flex flex-wrap gap-1 mb-3">
-                                    {studio.fasilitas.slice(0, 2).map((f) => (
-                                        <span
-                                            key={f}
-                                            className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full"
-                                        >
-                                            {f}
-                                        </span>
-                                    ))}
-                                </div>
+                                        {/* Fasilitas */}
+                                        <div className="flex flex-wrap gap-1 mb-3">
+                                            {studio.fasilitas.slice(0, 2).map((f) => (
+                                                <span
+                                                    key={f}
+                                                    className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full"
+                                                >
+                                                    {f}
+                                                </span>
+                                            ))}
+                                        </div>
 
-                                <p className="text-sm">
-                                    <span className="text-gray-500 font-light">Starts from </span>
-                                    <span className="font-semibold text-gray-900">
-                                        {formatRupiah(getHargaMulai(studio.id))}
-                                    </span>
-                                </p>
-                            </div>
-                        </Link>
-                    ))}
+                                        <p className="text-sm">
+                                            <span className="text-gray-500 font-light">Starts from </span>
+                                            <span className="font-semibold text-gray-900">
+                                                {formatRupiah(getHargaMulai(studio.id))}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </Link>
+                            </ScrollAnimate>
+                        ))
+                    )}
                 </div>
 
-                {/* Mobile View All */}
+                {/* Tombol Lihat Semua (Mobile) */}
                 <div className="mt-8 text-center md:hidden">
                     <Link
                         href="/studios"

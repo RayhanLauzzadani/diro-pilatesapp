@@ -1,69 +1,51 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
     return (
         <footer className="bg-gray-900 text-white py-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-                    {/* Brand */}
+                    {/* Logo & Deskripsi */}
                     <div className="md:col-span-1">
-                        <div className="flex items-center gap-2 mb-4">
-                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-sm">D</span>
-                            </div>
-                            <span className="text-xl font-bold">DIRO</span>
+                        <div className="mb-4">
+                            <Image
+                                src="/images/logo.png"
+                                alt="DIRO Pilates"
+                                width={160}
+                                height={50}
+                                className="h-28 w-auto brightness-0 invert"
+                            />
                         </div>
                         <p className="text-gray-400 text-sm">
                             Your go-to platform for booking Pilates, Yoga, and Fitness studios.
                         </p>
                     </div>
 
-                    {/* For Users */}
+                    {/* Menu Navigasi */}
                     <div>
-                        <h4 className="font-semibold mb-4">For Users</h4>
+                        <h4 className="font-semibold mb-4">Navigation</h4>
                         <ul className="space-y-2 text-gray-400 text-sm">
+                            <li>
+                                <Link href="/" className="hover:text-white transition-colors">
+                                    Home
+                                </Link>
+                            </li>
                             <li>
                                 <Link href="/studios" className="hover:text-white transition-colors">
                                     Browse Studios
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/how-it-works" className="hover:text-white transition-colors">
-                                    How It Works
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/pricing" className="hover:text-white transition-colors">
-                                    Pricing
+                                <Link href="/about" className="hover:text-white transition-colors">
+                                    About Us
                                 </Link>
                             </li>
                         </ul>
                     </div>
 
-                    {/* For Partners */}
-                    <div>
-                        <h4 className="font-semibold mb-4">For Partners</h4>
-                        <ul className="space-y-2 text-gray-400 text-sm">
-                            <li>
-                                <Link href="/partner" className="hover:text-white transition-colors">
-                                    Become a Partner
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/partner/dashboard" className="hover:text-white transition-colors">
-                                    Partner Dashboard
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/partner/resources" className="hover:text-white transition-colors">
-                                    Resources
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Contact */}
+                    {/* Kontak */}
                     <div>
                         <h4 className="font-semibold mb-4">Contact</h4>
                         <ul className="space-y-2 text-gray-400 text-sm">
@@ -71,7 +53,7 @@ export default function Footer() {
                             <li>+62 21 1234 5678</li>
                         </ul>
 
-                        {/* Social Icons */}
+                        {/* Sosial Media */}
                         <div className="flex gap-4 mt-4">
                             <a href="#" className="text-gray-400 hover:text-white transition-colors">
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -87,9 +69,9 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* Copyright */}
+                {/* Hak Cipta */}
                 <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
-                    <p>© 2026 DIRO. All rights reserved.</p>
+                    <p>© 2026 RAYHAN LAUZZADANI-INTERN_DIRO-TECHTEST. All rights reserved.</p>
                 </div>
             </div>
         </footer>
