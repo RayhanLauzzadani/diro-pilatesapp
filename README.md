@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Diro Pilates App
 
-## Getting Started
+A modern web application for booking Pilates studio sessions, built with a Go backend and a Next.js 14 frontend. This application allows users to view class schedules, book sessions, and manage their bookings with integrated payments via Midtrans.
 
-First, run the development server:
+## 🚀 Tech Stack
+
+### Frontend
+- **Framework:** [Next.js 14](https://nextjs.org/) (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Components:** Radix UI, Lucide React
+- **Authentication:** Supabase Auth (Client-side)
+
+### Backend
+- **Language:** Go (Golang) v1.22+
+- **Framework:** Gin Web Framework
+- **ORM:** GORM
+- **Database:** PostgreSQL (via Supabase)
+- **Payment Gateway:** Midtrans
+
+## 📂 Project Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+├── backend/            # Go backend code
+│   ├── cmd/            # Entry points
+│   ├── config/         # Configuration loaders
+│   ├── database/       # Database connection & seeds
+│   ├── handlers/       # HTTP request handlers
+│   ├── models/         # Database models
+│   ├── routes/         # API routing
+│   └── services/       # External services (Midtrans, etc.)
+├── src/                # Frontend source code
+│   ├── app/            # Next.js App Router pages
+│   ├── components/     # Reusable UI components
+│   └── lib/            # Utility functions
+├── public/             # Static assets
+└── ...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [Go](https://go.dev/) (v1.22 or higher)
+- PostgreSQL Database (or a [Supabase](https://supabase.com/) project)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Backend Setup
 
-## Learn More
+1.  Navigate to the backend directory:
+    ```bash
+    cd backend
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+2.  Install Go dependencies:
+    ```bash
+    go mod tidy
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3.  Create a `.env` file in the `backend` directory based on your configuration:
+    ```env
+    # Server
+    PORT=8080
+    FRONTEND_URL=http://localhost:3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    # Database (Supabase PostgreSQL)
+    DATABASE_URL=postgresql://user:password@host:port/dbname?sslmode=require
 
-## Deploy on Vercel
+    # Payment Gateway - Midtrans
+    MIDTRANS_SERVER_KEY=your_midtrans_server_key
+    MIDTRANS_CLIENT_KEY=your_midtrans_client_key
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4.  Run the backend server:
+    ```bash
+    go run main.go
+    ```
+    The server will start on `http://localhost:8080`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 2. Frontend Setup
+
+1.  Open a new terminal and verify you are in the project root.
+
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+
+3.  Create a `.env.local` file in the root directory:
+    ```env
+    # API Backend
+    NEXT_PUBLIC_API_URL=http://localhost:8080/api
+
+    # Midtrans Payment Gateway
+    NEXT_PUBLIC_MIDTRANS_CLIENT_KEY=your_midtrans_client_key
+
+    # Supabase Auth
+    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+    ```
+
+4.  Run the development server:
+    ```bash
+    npm run dev
+    ```
+
+5.  Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## ✨ Features
+
+- **Class Scheduling**: View available pilates classes and timeslots.
+- **Booking System**: Book classes directly through the app.
+- **Secure Payments**: Integrated with Midtrans for secure transactions.
+- **User Authentication**: Secure login and signup powered by Supabase.
+- **Responsive Design**: optimized for both desktop and mobile devices.
+
+## 📄 License
+
+This project is for educational/internship purposes.
